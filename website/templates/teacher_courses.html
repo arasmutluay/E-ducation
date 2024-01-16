@@ -2,30 +2,33 @@
 {% block title %} Your Courses {% endblock %}
 
 {% block content %}
-<div class="container">
-    <h1>Your Courses</h1>
+<div class="container mt-5 ">
+    <h1 class="">Your Courses</h1>
 
     {% if courses %}
-    <ul>
+    <div class="row">
         {% for course in courses %}
-        <li>{{ course.course_name }}
-            {% if course.applications %}
-            {% for application in course.applications %}
-            | Application Status: {{ application.status }}
-            {% if application.status == 'pending' %}
-            | <a class="btn btn-success btn-sm"
-                 href="{{ url_for('views.process_enrollment', application_id=application.id, action='approve') }}">Approve</a>
-            <a class="btn btn-danger btn-sm"
-               href="{{ url_for('views.process_enrollment', application_id=application.id, action='decline') }}">Decline</a>
-            {% endif %}
-            {% endfor %}
-            {% else %}
-            | No pending application
-            {% endif %}
-        </li>
+        <div class="col-md-4 mb-4">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">{{ course.course_name }}</h5>
+                    {% set pending_applications = course.applications|selectattr('status', 'equalto', 'pending')|list %}
+                    {% if pending_applications %}
+                        {% for application in pending_applications %}
+                            <p class="card-text">Application Status: {{ application.status }}</p>
+                            <a href="{{ url_for('views.process_enrollment', application_id=application.id, action='approve') }}"
+                               class="btn btn-success btn-sm">Approve</a>
+                            <a href="{{ url_for('views.process_enrollment', application_id=application.id, action='decline') }}"
+                               class="btn btn-danger btn-sm">Decline</a>
+                        {% endfor %}
+                    {% else %}
+                        <p class="card-text">No pending application</p>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
         {% endfor %}
-
-    </ul>
+    </div>
     {% else %}
     <p>No courses available.</p>
     {% endif %}

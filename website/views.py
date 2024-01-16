@@ -2,9 +2,11 @@ from flask import Blueprint, render_template, request, flash, redirect, url_for,
 from flask_login import login_required, current_user
 from dotenv import load_dotenv
 import os
-from sqlalchemy import and_
+from sqlalchemy import and_, not_
 from sqlalchemy.exc import IntegrityError
 from datetime import datetime
+
+from sqlalchemy.orm import joinedload
 
 from website import db
 from website.models import Quiz, Question, UserAnswer, Course, User, quiz_attempts, StudentApplication
@@ -242,9 +244,19 @@ def quizzes():
 
     current_time = datetime.now()
     enrolled_courses = current_user.enrolled_courses
-    available_quizzes = Quiz.query.filter(Quiz.course_id.in_([course.id for course in enrolled_courses])).all()
 
-    return render_template('quizzes.html', user=current_user, quizzes=available_quizzes, time=current_time)
+    available_quizzes = Quiz.query.filter(
+        Quiz.course_id.in_([course.id for course in enrolled_courses]),
+        not_(Quiz.id.in_(db.session.query(quiz_attempts.c.quiz_template_id).filter_by(student_id=current_user.id)))
+    ).all()
+
+    attempted_quizzes = db.session.query(Quiz, quiz_attempts.c.overall_score) \
+        .join(quiz_attempts,
+              and_(Quiz.id == quiz_attempts.c.quiz_template_id, quiz_attempts.c.student_id == current_user.id)) \
+        .all()
+
+    return render_template('quizzes.html', user=current_user, quizzes=available_quizzes, time=current_time,
+                           attempted_quizzes=attempted_quizzes)
 
 
 @views.route('/attend_quiz_questions/<int:quiz_id>', methods=['GET', 'POST'])
@@ -256,8 +268,20 @@ def attend_quiz_questions(quiz_id):
 
     quiz = Quiz.query.get_or_404(quiz_id)
 
+    available_quizzes = Quiz.query.filter(
+        Quiz.course_id.in_([course.id for course in current_user.enrolled_courses])
+    ).all()
+
+    if quiz not in available_quizzes:
+        flash('Access Denied: You are not allowed to attend this quiz!', 'error')
+        return redirect(url_for('views.quizzes'))
+
     if quiz.availability_date > datetime.now():
         flash("This quiz is not yet available.", 'error')
+        return redirect(url_for('views.quizzes'))
+
+    if quiz_id in [attempt.id for attempt in current_user.quiz_attempts]:
+        flash('You have already attempted this quiz.', 'error')
         return redirect(url_for('views.quizzes'))
 
     if request.method == 'POST':

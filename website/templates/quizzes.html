@@ -10,7 +10,9 @@
     .container {
         width: 80%;
         margin: 0 auto;
-        text-align: center;
+        display: flex;
+        flex-wrap: wrap; /* Allow items to wrap to the next line */
+        justify-content: space-between;
     }
 
     .quizzes-grid {
@@ -64,28 +66,72 @@
         background-color: #0056b3;
     }
 
+    .attempted-quizzes h1,
+    .available-quizzes h1 {
+        width: 100%; /* Full width for h1 */
+        text-align: center;
+        margin-bottom: 20px;
+    }
+
+    .attempted-quizzes .quizzes-grid,
+    .available-quizzes .quizzes-grid {
+        grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); /* Adjusted for responsive layout */
+        grid-gap: 20px;
+    }
+
+    .available-quizzes,
+    .attempted-quizzes {
+        width: 48%; /* Adjusted width for responsiveness */
+        text-align: center;
+    }
 
 </style>
+
 <div class="container">
+    <div class="available-quizzes">
     <h1>Available Quizzes</h1>
 
     <div class="quizzes-grid">
         {% for quiz in quizzes %}
-        <div class="quiz-box">
-            <h2>{{ quiz.quiz_name }}</h2>
-            <p>{{ quiz.total_questions }} Questions</p>
-            <p>Time Limit: {{ quiz.time_limit }} Minutes</p>
-            {% if quiz.availability_date %}
-            {% if quiz.availability_date < time.now() %}
-            <a class="attend-link" href="{{ url_for('views.attend_quiz_questions', quiz_id=quiz.id) }}">Attend</a>
-            {% else %}
-            <p>Available on: <br> {{ quiz.availability_date }}</p>
+            {% if quiz.id not in attempted_quiz_ids %}
+                <div class="quiz-box">
+                    <h2>{{ quiz.quiz_name }}</h2>
+                    <p>{{ quiz.total_questions }} Questions</p>
+                    <p>Time Limit: {{ quiz.time_limit }} Minutes</p>
+                    {% if quiz.availability_date %}
+                        {% if quiz.availability_date < time.now() %}
+                            <a class="attend-link" href="{{ url_for('views.attend_quiz_questions', quiz_id=quiz.id) }}">Attend</a>
+                        {% else %}
+                            <p>Available on: <br> {{ quiz.availability_date }}</p>
+                        {% endif %}
+                    {% else %}
+                        <p>Availability date not set</p>
+                    {% endif %}
+                </div>
             {% endif %}
-            {% else %}
-            <p>Availability date not set</p>
-            {% endif %}
-        </div>
         {% endfor %}
     </div>
 </div>
+
+    <div class="attempted-quizzes">
+        <h1>Attempted Quizzes</h1>
+
+        <div class="quizzes-grid">
+            {% for result in attempted_quizzes %}
+            <div class="quiz-box">
+                <h2>{{ result[0].quiz_name }}</h2>
+                <p>{{ result[0].total_questions }} Questions</p>
+                <p>Time Limit: {{ result[0].time_limit }} Minutes</p>
+
+                {% if result[1] is not none %}
+                <p>Score: {{ result[1] }}%</p>
+                {% else %}
+                <p>No score available</p>
+                {% endif %}
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+
 {% endblock %}

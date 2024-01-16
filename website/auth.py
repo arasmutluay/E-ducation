@@ -47,7 +47,7 @@ def sign_up():
                 validate = validate_email(email)
                 email = validate["email"]
             except EmailNotValidError as e:
-                flash('Please enter a valid emaiL!', category='error')
+                flash('Please enter a valid email!', category='error')
                 return render_template("sign_up.html", user=current_user, site_key=SITE_KEY)
 
             if user:

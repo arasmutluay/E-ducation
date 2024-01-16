@@ -1,0 +1,68 @@
+{% extends "base.html" %}
+{% block title %}Quiz Results{% endblock %}
+
+{% block content %}
+<style>
+    .container {
+        width: 80%;
+        margin: 0 auto;
+        text-align: center;
+    }
+
+    .quiz-info {
+        padding: 20px;
+        border: 1px solid #ccc;
+        border-radius: 8px;
+        margin-bottom: 20px;
+        background-color: #f9f9f9;
+        box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+    }
+
+    .score {
+        font-size: 1.5em;
+        margin-bottom: 10px;
+        color: #333;
+    }
+
+    .details {
+        font-size: 1.2em;
+        color: #666;
+    }
+
+    .details p {
+        margin-bottom: 5px;
+    }
+
+    .back-button {
+        padding: 10px 20px;
+        font-size: 1em;
+        background-color: #007bff;
+        color: #fff;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        transition: background-color 0.3s;
+        text-decoration: none;
+        display: inline-block;
+        margin-top: 20px;
+    }
+
+    .back-button:hover {
+        background-color: #0056b3;
+    }
+</style>
+
+<div class="container">
+    <div class="quiz-info">
+        <h2>Quiz: {{ quiz.quiz_name }}</h2>
+        <div class="score">
+            Overall Score: {{ overall_score }}%
+        </div>
+        <div class="details">
+            <p>Total Questions: {{ quiz.total_questions }}</p>
+        </div>
+    </div>
+
+    <a class="back-button" href="{{ url_for('views.home') }}">Home Page</a>
+</div>
+{% endblock %}

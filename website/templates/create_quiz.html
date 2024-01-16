@@ -1,0 +1,97 @@
+{% extends "base.html" %}
+{% block title %} Add Quiz {% endblock %}
+
+{% block content %}
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+        background-color: #f7f7f7;
+    }
+
+    .container {
+        max-width: 600px;
+        margin: 40px auto;
+        background-color: #fff;
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+
+    h1 {
+        text-align: center;
+        margin-bottom: 20px;
+    }
+
+    .quiz-form .form-group {
+        margin-bottom: 20px;
+    }
+
+    .quiz-form label {
+        display: block;
+        margin-bottom: 5px;
+        font-weight: bold;
+    }
+
+    .quiz-form input[type="text"],
+    .quiz-form input[type="number"] {
+        width: calc(100% - 12px);
+        padding: 8px;
+        font-size: 16px;
+        border-radius: 4px;
+        border: 1px solid #ccc;
+    }
+
+    .quiz-form button {
+        padding: 10px 20px;
+        font-size: 16px;
+        background-color: #007bff;
+        color: #fff;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        transition: background-color 0.3s;
+    }
+
+    .quiz-form button:hover {
+        background-color: #0056b3;
+    }
+
+</style>
+<div class="container">
+    <h1>Create a Quiz</h1>
+    <form id="quizForm" action="{{ url_for('views.create_quiz') }}" class="quiz-form" method="POST">
+        <div class="form-group">
+            <label for="quiz_name">Quiz Name:</label>
+            <input id="quiz_name" name="quiz_name" required type="text">
+        </div>
+
+        <div class="form-group">
+            <label for="total_questions">Total Questions:</label>
+            <input id="total_questions" min="1" name="total_questions" required type="number">
+        </div>
+
+        <div class="form-group">
+            <label for="course">Select Course:</label>
+            <select id="course" name="course_id" required>
+                {% for course in courses %}
+                <option value="{{ course.id }}">{{ course.course_name }}</option>
+                {% endfor %}
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label for="time_limit">Time Limit (minutes):</label>
+            <input id="time_limit" min="1" name="time_limit" type="number">
+        </div>
+
+        <div class="form-group">
+            <label for="availability_date">Availability Date:</label>
+            <input id="availability_date" name="availability_date" type="datetime-local">
+        </div>
+
+        <button id="nextBtn" type="submit">Next</button>
+    </form>
+</div>
+{% endblock %}

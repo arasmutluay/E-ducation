@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+{% block title %} Manage Users {% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <h1 class="text-center mb-4">Manage Users</h1>
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <table class="table">
+                <thead>
+                <tr>
+                    <th scope="col">User ID</th>
+                    <th scope="col">Email</th>
+                    <th scope="col">First Name</th>
+                    <th scope="col">Current Role</th>
+                    <th scope="col">Change Role</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for user in users if user.role != 'admin' %}
+                <tr>
+                    <td>{{ user.id }}</td>
+                    <td>{{ user.email }}</td>
+                    <td>{{ user.firstName }}</td>
+                    <td>{{ user.role }}</td>
+                    <td>
+                        <form action="{{ url_for('views.manage_users') }}" method="POST">
+                            <input name="user_id" type="hidden" value="{{ user.id }}">
+                            <select class="form-control" name="new_role">
+                                <option value="teacher">Teacher</option>
+                                <option value="student">Student</option>
+                            </select>
+                            <button class="btn btn-primary mt-2" type="submit">Change</button>
+                        </form>
+                    </td>
+                </tr>
+                {% endfor %}
+
+
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}

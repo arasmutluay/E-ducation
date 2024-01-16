@@ -1,0 +1,20 @@
+<!-- enroll_course.html -->
+{% extends "base.html" %}
+{% block title %} Enroll in a Course {% endblock %}
+
+{% block content %}
+<div class="container">
+    <h1>Available Courses</h1>
+    <ul>
+        {% for course in available_courses %}
+        <li>
+            <h2>{{ course.course_name }}</h2>
+            <p>Teacher: {{ course.teacher.firstName }}</p>
+            <form action="{{ url_for('views.enroll_course', course_id=course.id) }}" method="POST">
+                <button type="submit">Enroll</button>
+            </form>
+        </li>
+        {% endfor %}
+    </ul>
+</div>
+{% endblock %}

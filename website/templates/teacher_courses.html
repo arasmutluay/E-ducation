@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+{% block title %} Your Courses {% endblock %}
+
+{% block content %}
+<div class="container">
+    <h1>Your Courses</h1>
+
+    {% if courses %}
+    <ul>
+        {% for course in courses %}
+        <li>{{ course.course_name }}
+            {% if course.applications %}
+            {% for application in course.applications %}
+            | Application Status: {{ application.status }}
+            {% if application.status == 'pending' %}
+            | <a class="btn btn-success btn-sm"
+                 href="{{ url_for('views.process_enrollment', application_id=application.id, action='approve') }}">Approve</a>
+            <a class="btn btn-danger btn-sm"
+               href="{{ url_for('views.process_enrollment', application_id=application.id, action='decline') }}">Decline</a>
+            {% endif %}
+            {% endfor %}
+            {% else %}
+            | No pending application
+            {% endif %}
+        </li>
+        {% endfor %}
+
+    </ul>
+    {% else %}
+    <p>No courses available.</p>
+    {% endif %}
+</div>
+{% endblock %}

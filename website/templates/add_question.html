@@ -1,0 +1,110 @@
+{% extends "base.html" %}
+{% block title %} Add Question {% endblock %}
+
+{% block content %}
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+        background-color: #f7f7f7;
+    }
+
+    .container {
+        max-width: 600px;
+        margin: 40px auto;
+        background-color: #fff;
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+
+    h1 {
+        text-align: center;
+        margin-bottom: 20px;
+    }
+
+    .quiz-form .form-group {
+        margin-bottom: 20px;
+    }
+
+    .quiz-form label {
+        display: block;
+        margin-bottom: 5px;
+        font-weight: bold;
+    }
+
+    .quiz-form input[type="text"],
+    .quiz-form input[type="number"] {
+        width: calc(100% - 12px);
+        padding: 8px;
+        font-size: 16px;
+        border-radius: 4px;
+        border: 1px solid #ccc;
+    }
+
+    .quiz-form button {
+        padding: 10px 20px;
+        font-size: 16px;
+        background-color: #007bff;
+        color: #fff;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        transition: background-color 0.3s;
+    }
+
+    .quiz-form button:hover {
+        background-color: #0056b3;
+    }
+
+</style>
+<div class="container">
+    <form id="questionForm" action="{{ url_for('views.add_question') }}" class="quiz-form" method="POST">
+        <div class="form-group">
+            <label for="question_text">Question:</label>
+            <input id="question_text" name="question_text" required type="text">
+        </div>
+
+        <div class="form-group">
+            <label for="option_a">Option A:</label>
+            <input id="option_a" name="option_a" required type="text">
+        </div>
+
+        <div class="form-group">
+            <label for="option_b">Option B:</label>
+            <input id="option_b" name="option_b" required type="text">
+        </div>
+
+        <div class="form-group">
+            <label for="option_c">Option C:</label>
+            <input id="option_c" name="option_c" required type="text">
+        </div>
+
+        <div class="form-group">
+            <label for="option_d">Option D:</label>
+            <input id="option_d" name="option_d" required type="text">
+        </div>
+
+        <div class="form-group">
+            <label for="correct_option">Correct Option:</label>
+            <select id="correct_option" name="correct_option">
+                <option value="option_a">Option A</option>
+                <option value="option_b">Option B</option>
+                <option value="option_c">Option C</option>
+                <option value="option_d">Option D</option>
+            </select>
+        </div>
+
+        <button id="submitButton" type="submit">Submit Question</button>
+        <input id="quiz_id" name="quiz_id" type="hidden" value="{{ quiz_id }}">
+        <input id="total_questions" type="hidden" value="{{ total_questions }}">
+    </form>
+</div>
+
+<script>
+  
+</script>
+
+
+{% endblock %}

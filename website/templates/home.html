@@ -1,0 +1,55 @@
+{% extends "base.html" %}
+{% block title %} Home {% endblock %}
+
+{% block content %}
+<style>
+    body {
+        background-color: burlywood;
+    }
+
+    .home_info {
+        background-color: antiquewhite;
+    }
+</style>
+<div class="container my-5">
+    <div class="home_info p-5 text-center rounded-4">
+        <svg class="bi mt-4 mb-3" height="100" width="100">
+            <use xlink:href="#bootstrap"></use>
+        </svg>
+        <h1 class="text-dark">Ready To Take Your Quiz?</h1>
+        <p class="fs-5 text-dark">
+            Take quizzes the easy way! Log In to your account and take your quiz
+        </p>
+        <p class="fs-5 text-dark">
+            Don't have an account? Click the link below.
+        </p>
+        <div class="d-inline-flex gap-2 mb-5">
+            {%if current_user.is_authenticated and current_user.role == 'student' %}
+            <a href="quizzes">
+                <button class="d-inline-flex align-items-center btn px-4 rounded-pill"
+                        type="button">
+                    Take Quiz!
+                </button>
+            </a>
+            {%elif current_user.is_authenticated and current_user.role == 'teacher' %}
+            <a href="create_quiz">
+                <button class="d-inline-flex align-items-center btn px-4 rounded-pill"
+                        type="button">
+                    Create Quiz!
+                </button>
+            </a>
+            {%else%}
+            <a href="sign_up">
+                <button class="d-inline-flex align-items-center btn px-4 rounded-pill"
+                        type="button">
+                    Sign Up!
+                </button>
+            </a>
+            {%endif%}
+
+
+        </div>
+    </div>
+</div>
+{% endblock %}
+

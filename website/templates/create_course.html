@@ -2,26 +2,47 @@
 {% block title %} Create Course {% endblock %}
 
 {% block content %}
-<div class="container mt-5">
-    <h1 class="text-center mb-4">Create a New Course</h1>
-    <div class="row justify-content-center">
-        <div class="col-md-6">
+<style>
+    .create-course-div {
+        background-color: #DBE2EF;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        transition: transform 0.2s;
+        width: 50%;
+        margin: auto;
+    }
+
+    .form-group label {
+        display: flex;
+        justify-content: flex-start;
+    }
+
+    .btn {
+        background-color: #3F72AF;
+        color: #DBE2EF;
+    }
+</style>
+<div class="container">
+    <div class="create-course-div p-5 mt-5 text-center rounded-4 row justify-content-center">
+        <h1 class="text-center mb-4">Create a New Course</h1>
+        <div class="col-md-8">
             <form id="courseForm" action="{{ url_for('views.create_course') }}" class="course-form" method="POST">
                 <div class="form-group">
                     <label for="course_name">Course Name:</label>
-                    <input id="course_name" name="course_name" required type="text" class="form-control">
+                    <input id="course_name" class="form-control" name="course_name" required type="text">
                 </div>
 
                 <div class="form-group">
                     <label for="teacher_id">Teacher:</label>
-                    <select id="teacher_id" name="teacher_id" required class="form-control">
+                    <select id="teacher_id" class="form-control" name="teacher_id" required>
                         {% for teacher in teachers %}
-                            <option value="{{ teacher.id }}">{{ teacher.firstName }}</option>
+                        <option value="{{ teacher.id }}">{{ teacher.firstName }}</option>
                         {% endfor %}
                     </select>
                 </div>
 
-                <button id="createCourseBtn" type="submit" class="btn btn-primary btn-block">Create Course</button>
+                <button id="createCourseBtn" class="d-inline-flex align-items-center btn px-4 rounded-pill mt-3"
+                        type="submit">Create Course
+                </button>
             </form>
         </div>
     </div>

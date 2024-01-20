@@ -2,30 +2,55 @@
 {% block title %} Login {% endblock %}
 
 {% block content %}
+<style>
+    .login-div {
+        background-color: #DBE2EF;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        transition: transform 0.2s;
+        width: 50%;
+        margin: auto;
+    }
 
+
+    .form-group label {
+        display: flex;
+        justify-content: flex-start;
+    }
+
+    .btn {
+        background-color: #3F72AF;
+        color: #DBE2EF;
+    }
+
+
+</style>
 <div class="container">
-    <div class="row justify-content-center">
-        <div class="col-md-6 mt-5">
-            <form id="login_form" method="POST">
-                <h3 align="center">Login</h3>
-                <div class="form-group">
-                    <label for="email">Email Adress</label>
-                    <input id="email" class="form-control" name="email" placeholder="Enter Email" type="email">
-                </div>
-                <div class="form-group">
-                    <label for="password">Password</label>
-                    <input id="password" class="form-control" name="password" placeholder="Enter Password"
-                           type="password">
-                </div>
+    <div class="login-div p-5 mt-5 text-center rounded-4">
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <form id="login_form" method="POST">
+                    <h3 align="center">Login</h3>
+                    <div class="form-group">
+                        <label for="email">Email Address</label>
+                        <input id="email" class="form-control" name="email" placeholder="Enter Email" type="email">
+                    </div>
+                    <div class="form-group">
+                        <label for="password">Password</label>
+                        <input id="password" class="form-control" name="password" placeholder="Enter Password"
+                               type="password">
+                    </div>
 
-                <br/>
-                <button class="g-recaptcha btn btn-primary" data-action="submit"
-                        data-callback="verifyCaptchaCallback" data-sitekey="{{ site_key }}" type="submit">Submit
-                </button>
-            </form>
+                    <br/>
+                    <button class="g-recaptcha d-inline-flex align-items-center btn px-4 rounded-pill"
+                            data-action="submit"
+                            data-callback="verifyCaptchaCallback" data-sitekey="{{ site_key }}" type="submit">Submit
+                    </button>
+                </form>
+            </div>
         </div>
     </div>
 </div>
+
 <script async defer src="https://www.google.com/recaptcha/api.js"></script>
 <script>
     function onSubmit(token) {

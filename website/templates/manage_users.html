@@ -2,44 +2,64 @@
 {% block title %} Manage Users {% endblock %}
 
 {% block content %}
-<div class="container mt-5">
-    <h1 class="text-center mb-4">Manage Users</h1>
-    <div class="row justify-content-center">
-        <div class="col-md-8">
-            <table class="table">
-                <thead>
-                <tr>
-                    <th scope="col">User ID</th>
-                    <th scope="col">Email</th>
-                    <th scope="col">First Name</th>
-                    <th scope="col">Current Role</th>
-                    <th scope="col">Change Role</th>
-                </tr>
-                </thead>
-                <tbody>
-                {% for user in users if user.role != 'admin' %}
-                <tr>
-                    <td>{{ user.id }}</td>
-                    <td>{{ user.email }}</td>
-                    <td>{{ user.firstName }}</td>
-                    <td>{{ user.role }}</td>
-                    <td>
-                        <form action="{{ url_for('views.manage_users') }}" method="POST">
-                            <input name="user_id" type="hidden" value="{{ user.id }}">
-                            <select class="form-control" name="new_role">
-                                <option value="teacher">Teacher</option>
-                                <option value="student">Student</option>
-                            </select>
-                            <button class="btn btn-primary mt-2" type="submit">Change</button>
-                        </form>
-                    </td>
-                </tr>
-                {% endfor %}
+<style>
+    .manage-users-div {
+        background-color: #DBE2EF;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        transition: transform 0.2s;
+        width: 75%;
+        margin: auto;
+    }
 
+    .table tbody tr td,
+    .table thead th {
+        background-color: #DBE2EF;
+        border: 1px solid #AAB7C4;
+        vertical-align: middle;
 
-                </tbody>
-            </table>
-        </div>
+    }
+
+    .btn {
+        background-color: #3F72AF;
+        color: #DBE2EF;
+    }
+
+</style>
+<div class="container">
+    <div class="manage-users-div p-5 mt-5 text-center rounded-4">
+        <h1 class="text-center mb-4">Manage Users</h1>
+
+        <table class="table">
+            <thead>
+            <tr>
+                <th scope="col">User ID</th>
+                <th scope="col">Email</th>
+                <th scope="col">First Name</th>
+                <th scope="col">Current Role</th>
+                <th scope="col">Change Role</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for user in users if user.role != 'admin' %}
+            <tr>
+                <td>{{ user.id }}</td>
+                <td>{{ user.email }}</td>
+                <td>{{ user.firstName }}</td>
+                <td>{{ user.role }}</td>
+                <td>
+                    <form action="{{ url_for('views.manage_users') }}" method="POST">
+                        <input name="user_id" type="hidden" value="{{ user.id }}">
+                        <select class="form-control" name="new_role">
+                            <option value="teacher">Teacher</option>
+                            <option value="student">Student</option>
+                        </select>
+                        <button class="d-inline-flex align-items-center btn px-4 rounded-pill mt-2" type="submit">Change</button>
+                    </form>
+                </td>
+            </tr>
+            {% endfor %}
+            </tbody>
+        </table>
     </div>
 </div>
 {% endblock %}

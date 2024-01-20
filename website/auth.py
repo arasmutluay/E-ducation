@@ -2,12 +2,10 @@ import os, requests
 from dotenv import load_dotenv
 from flask import Blueprint, render_template, request, flash, redirect, url_for, abort, session, jsonify
 from flask_login import login_user, login_required, logout_user, current_user
-from flask_limiter import RateLimitExceeded
 from website import db
 from website.models import User
 from website import bcrypt_extension
 from email_validator import validate_email, EmailNotValidError
-# from . import limiter
 
 auth = Blueprint('auth', __name__)
 load_dotenv()
@@ -15,13 +13,6 @@ load_dotenv()
 SITE_KEY = os.getenv('SITE_KEY')
 SECRET_KEY = os.getenv('SECRET_KEY')
 VERIFY_URL = os.getenv('VERIFY_URL')
-
-
-# Error handler fonksiyonu, RateLimitExceeded exceptionunda direkt çağırılıyor, 429=too many requests
-# @auth.errorhandler(RateLimitExceeded)
-# def rate_limit_exceeded(e):
-#     flash('Too many login attempts. Please try again in a minute.', category='error')
-#     return render_template("login.html", user=current_user, site_key=SITE_KEY), 429
 
 
 @auth.route('/signup', methods=['GET', 'POST'])

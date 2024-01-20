@@ -2,54 +2,182 @@
 {% block title %} Home {% endblock %}
 
 {% block content %}
-<style>
-    body {
-        background-color: burlywood;
-    }
+    <style>
+        body {
+            background-color: #F9F7F7;
+        }
 
-    .home_info {
-        background-color: antiquewhite;
-    }
-</style>
-<div class="container my-5">
-    <div class="home_info p-5 text-center rounded-4">
-        <svg class="bi mt-4 mb-3" height="100" width="100">
-            <use xlink:href="#bootstrap"></use>
-        </svg>
-        <h1 class="text-dark">Ready To Take Your Quiz?</h1>
-        <p class="fs-5 text-dark">
-            Take quizzes the easy way! Log In to your account and take your quiz
-        </p>
-        <p class="fs-5 text-dark">
-            Don't have an account? Click the link below.
-        </p>
-        <div class="d-inline-flex gap-2 mb-5">
-            {%if current_user.is_authenticated and current_user.role == 'student' %}
-            <a href="quizzes">
-                <button class="d-inline-flex align-items-center btn px-4 rounded-pill"
-                        type="button">
-                    Take Quiz!
-                </button>
-            </a>
-            {%elif current_user.is_authenticated and current_user.role == 'teacher' %}
-            <a href="create_quiz">
-                <button class="d-inline-flex align-items-center btn px-4 rounded-pill"
-                        type="button">
-                    Create Quiz!
-                </button>
-            </a>
-            {%else%}
-            <a href="sign_up">
-                <button class="d-inline-flex align-items-center btn px-4 rounded-pill"
-                        type="button">
-                    Sign Up!
-                </button>
-            </a>
-            {%endif%}
+        .home_info {
+            background-color: #DBE2EF;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            transition: transform 0.2s;
+        }
+
+        .home_info:hover {
+            transform: scale(1.01);
+        }
+
+        h1 {
+            color: #112D4E;
+        }
+
+        .btn {
+            background-color: #3F72AF;
+            color: #DBE2EF;
+        }
+
+        .features {
+            height: 100vh;
+
+        }
+
+        .text-bg-primary {
+            background-color: #112D4E !important;
+        }
+
+    </style>
+    {% if current_user.is_authenticated %}
+        {% if current_user.role == 'admin' %}
+            <div class="container my-5">
+                <div class="admin_info p-5 text-center rounded-4">
+                    <svg class="bi mt-4 mb-3" height="100" width="100">
+                        <use xlink:href="#bootstrap"></use>
+                    </svg>
+                    <h1 class="display-3 fw-bold">Welcome, Admin!</h1>
+                    <p class="fs-5">
+                        As an admin, you have special privileges to manage users and create courses.
+                    </p>
+                    <p class="fs-5 ">
+                        Ready to take control? Click the buttons below!
+                    </p>
+                    <div class="d-inline-flex gap-2 mb-5">
+                        <a href="/create_course">
+                            <button class="d-inline-flex align-items-center btn px-4 rounded-pill"
+                                    type="button">
+                                Create Course
+                            </button>
+                        </a>
+                        <a href="/manage_users">
+                            <button class="d-inline-flex align-items-center btn px-4 rounded-pill"
+                                    type="button">
+                                Manage Users
+                            </button>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        {% elif current_user.role == 'teacher' %}
+            <h1>hello teacher</h1>
+
+        {% elif current_user.role == 'student' %}
+            <h1>hello student</h1>
+
+        {% endif %}
 
 
+    {% else %}
+        <div class="container my-5">
+            <div class="home_info p-5 text-center rounded-4">
+                <svg class="bi mt-4 mb-3" height="100" width="100">
+                    <use xlink:href="#bootstrap"></use>
+                </svg>
+                <h1 class="display-3 fw-bold">Ready To Take Your Quiz?</h1>
+                <p class="fs-5">
+                    Take quizzes the easy way! Log In to your account and take your quiz
+                </p>
+                <p class="fs-5 ">
+                    Want more information? Click the button below!
+                </p>
+                <div class="d-inline-flex gap-2 mb-5">
+                    <a href="#features">
+                        <button class="d-inline-flex align-items-center btn px-4 rounded-pill"
+                                type="button">
+                            Features
+                        </button>
+                    </a>
+                </div>
+            </div>
         </div>
-    </div>
-</div>
+
+        <div class="features row row-cols-1 row-cols-md-2 align-items-md-center g-5 py-5" id="features">
+            <div class="col d-flex flex-column align-items-start gap-2">
+
+                <h2 class="fw-bold text-body-emphasis">Discover Our Online Quiz Platform</h2>
+                <p class="text-body-secondary">E-ducation provides a user-friendly interface for every
+                    user. Users will seamlessly navigate through the platform, encountering an intuitive design that
+                    simplifies the learning experience.
+                </p>
+                <p class="text-body-secondary"> Don't have an account? Click the link below to sign up!
+                </p>
+                <a href="/signup">
+                    <button class="d-inline-flex align-items-center btn px-4 rounded-pill"
+                            type="button">
+                        Sign Up!
+                    </button>
+                </a>
+            </div>
+
+            <div class="col">
+                <div class="row row-cols-1 row-cols-sm-2 g-4">
+                    <div class="col d-flex flex-column gap-2">
+                        <div class="feature-icon-small d-inline-flex align-items-center justify-content-center text-bg-primary bg-gradient fs-4 rounded-3">
+                            <svg class="bi" width="1em" height="1em">
+                                <use xlink:href="#collection"></use>
+                            </svg>
+                        </div>
+                        <h4 class="fw-semibold mb-0 text-body-emphasis">Simplified Quiz Creation
+                        </h4>
+                        <p class="text-body-secondary">Teachers will easily create engaging quizzes to the students of
+                            our
+                            platform. </p>
+                    </div>
+
+                    <div class="col d-flex flex-column gap-2">
+                        <div class="feature-icon-small d-inline-flex align-items-center justify-content-center text-bg-primary bg-gradient fs-4 rounded-3">
+                            <svg class="bi" width="1em" height="1em">
+                                <use xlink:href="#gear-fill"></use>
+                            </svg>
+                        </div>
+                        <h4 class="fw-semibold mb-0 text-body-emphasis">User-Friendly Interface
+                        </h4>
+                        <p class="text-body-secondary">Enjoy an intuitive and visually appealing interface designed for
+                            all
+                            users. Navigating through quizzes, tracking progress, and accessing performance analytics is
+                            a
+                            breeze with our user-friendly design.
+
+                        </p>
+                    </div>
+
+                    <div class="col d-flex flex-column gap-2">
+                        <div class="feature-icon-small d-inline-flex align-items-center justify-content-center text-bg-primary bg-gradient fs-4 rounded-3">
+                            <svg class="bi" width="1em" height="1em">
+                                <use xlink:href="#speedometer"></use>
+                            </svg>
+                        </div>
+                        <h4 class="fw-semibold mb-0 text-body-emphasis">Secure and Reliable</h4>
+                        <p class="text-body-secondary">Rest easy knowing that your data and quizzes are secure. Our
+                            platform
+                            prioritizes data integrity and privacy, ensuring a reliable and safe environment for both
+                            teachers and students.</p>
+                    </div>
+
+                    <div class="col d-flex flex-column gap-2">
+                        <div class="feature-icon-small d-inline-flex align-items-center justify-content-center text-bg-primary bg-gradient fs-4 rounded-3">
+                            <svg class="bi" width="1em" height="1em">
+                                <use xlink:href="#table"></use>
+                            </svg>
+                        </div>
+                        <h4 class="fw-semibold mb-0 text-body-emphasis">Instant Grading</h4>
+                        <p class="text-body-secondary">Receive immediate feedback upon submitting quizzes. Our platform
+                            employs instant grading, allowing users to view their scores and performance metrics in
+                            real-time. </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% endif %}
+    {% include "footer.html" %}
 {% endblock %}
+
 

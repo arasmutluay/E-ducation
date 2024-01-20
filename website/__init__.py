@@ -4,18 +4,12 @@ from flask_bcrypt import Bcrypt
 from flask_login import LoginManager
 from flask_migrate import Migrate
 from flask_sqlalchemy import SQLAlchemy
-from flask_limiter import Limiter
-from flask_limiter.util import get_remote_address
 from os import path, getenv
 
 db = SQLAlchemy()
 migrate = Migrate()
 bcrypt_extension = Bcrypt()
 DB_NAME = 'education_db'
-# limiter = Limiter(
-#     key_func=get_remote_address,
-#     default_limits=["3 per minute"]
-# )
 
 
 def create_app():
@@ -28,7 +22,6 @@ def create_app():
     db.init_app(app)
     bcrypt_extension.init_app(app)
     migrate.init_app(app, db)
-    # limiter.init_app(app)
 
     from .views import views
     from .auth import auth

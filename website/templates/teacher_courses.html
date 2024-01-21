@@ -2,35 +2,64 @@
 {% block title %} Your Courses {% endblock %}
 
 {% block content %}
-<div class="container mt-5 ">
-    <h1 class="">Your Courses</h1>
+    <style>
+        body {
+            background-color: #F9F7F7;
+        }
 
-    {% if courses %}
-    <div class="row">
-        {% for course in courses %}
-        <div class="col-md-4 mb-4">
-            <div class="card">
-                <div class="card-body">
-                    <h5 class="card-title">{{ course.course_name }}</h5>
-                    {% set pending_applications = course.applications|selectattr('status', 'equalto', 'pending')|list %}
-                    {% if pending_applications %}
-                        {% for application in pending_applications %}
-                            <p class="card-text">Application Status: {{ application.status }}</p>
-                            <a href="{{ url_for('views.process_enrollment', application_id=application.id, action='approve') }}"
-                               class="btn btn-success btn-sm">Approve</a>
-                            <a href="{{ url_for('views.process_enrollment', application_id=application.id, action='decline') }}"
-                               class="btn btn-danger btn-sm">Decline</a>
-                        {% endfor %}
-                    {% else %}
-                        <p class="card-text">No pending application</p>
-                    {% endif %}
-                </div>
+        .card-body {
+            background-color: #DBE2EF;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            transition: transform 0.2s;
+            width: 100%;
+            margin: auto;
+        }
+
+        .form-group label {
+            display: flex;
+            justify-content: flex-start;
+        }
+
+        .btn {
+            color: #DBE2EF;
+        }
+    </style>
+
+    <div class="container mt-5">
+        <h1 align="center">Your Courses</h1>
+
+        {% if courses %}
+            <div class="row">
+                {% for course in courses %}
+                    <div class="col-md-4 mb-4 mt-3">
+                        <div class="card">
+                            <div class="card-body">
+                                <h5 class="card-title">{{ course.course_name }}</h5>
+
+                                {% set course_pending_applications = pending_applications|selectattr('course_name', 'equalto', course.course_name)|list %}
+
+                                {% if course_pending_applications %}
+                                    {% for application in course_pending_applications %}
+                                        <p class="card-text">Application
+                                            Status: {{ application.StudentApplication.status }}</p>
+                                        <p class="card-text">Student Name: {{ application.student_name }}</p>
+                                        <a class="btn btn-success btn-sm"
+                                           href="{{ url_for('views.process_enrollment', application_id=application.StudentApplication.id, action='approve') }}">Approve</a>
+                                        <a class="btn btn-danger btn-sm"
+                                           href="{{ url_for('views.process_enrollment', application_id=application.StudentApplication.id, action='decline') }}">Decline</a>
+                                    {% endfor %}
+                                {% else %}
+                                    <p class="card-text">No pending applications</p>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
             </div>
-        </div>
-        {% endfor %}
+        {% else %}
+            <p>No courses available.</p>
+        {% endif %}
     </div>
-    {% else %}
-    <p>No courses available.</p>
-    {% endif %}
-</div>
+
+
 {% endblock %}

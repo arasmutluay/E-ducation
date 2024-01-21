@@ -67,7 +67,34 @@
                 </div>
             </div>
         {% elif current_user.role == 'teacher' %}
-            <h1>hello teacher</h1>
+            <div class="container my-5">
+                <div class="teacher_info p-5 text-center rounded-4">
+                    <svg class="bi mt-4 mb-3" height="100" width="100">
+                        <use xlink:href="#bootstrap"></use>
+                    </svg>
+                    <h1 class="display-3 fw-bold">Welcome, Teacher!</h1>
+                    <p class="fs-5">
+                        As a teacher, you can create engaging quizzes and you can handle enrollment processes for your
+                        students.
+                    </p>
+                    <p class="fs-5 ">
+                        Ready to share knowledge? Click the button below to create a quiz or handle enrollments!
+                    </p>
+                    <div class="d-inline-flex gap-2 mb-5">
+                        <a href="/create_quiz">
+                            <button class="d-inline-flex align-items-center btn px-4 rounded-pill" type="button">
+                                Create Quiz
+                            </button>
+                        </a>
+                        <a href="/teacher_courses">
+                            <button class="d-inline-flex align-items-center btn px-4 rounded-pill" type="button">
+                                Handle Enrollment
+                            </button>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
 
         {% elif current_user.role == 'student' %}
             <h1>hello student</h1>

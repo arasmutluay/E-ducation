@@ -395,6 +395,16 @@ def enroll_course(course_id):
         flash("You are already enrolled in this course.", "error")
         return redirect(url_for('views.available_courses'))
 
+    existing_application = StudentApplication.query.filter_by(
+        student_id=current_user.id,
+        course_id=course.id,
+        status='pending'
+    ).first()
+
+    if existing_application:
+        flash("Your enrollment request is still pending approval.", "error")
+        return redirect(url_for('views.available_courses'))
+
     application = StudentApplication(student_id=current_user.id, course_id=course.id)
     db.session.add(application)
     db.session.commit()

@@ -2,8 +2,39 @@
 {% block title %} Quiz Completed {% endblock %}
 
 {% block content %}
+<style>
+    body {
+        background-color: #F9F7F7;
+    }
+
+    .login-div {
+        background-color: #DBE2EF;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        transition: transform 0.2s;
+        width: 50%;
+        margin: auto;
+    }
+
+    .form-group label {
+        display: flex;
+        justify-content: flex-start;
+    }
+
+    .btn {
+        background-color: #3F72AF;
+        color: #DBE2EF;
+    }
+</style>
+
 <div class="container">
-    <h1>Quiz Completed</h1>
-    <p>Congratulations! You have successfully added all the questions for the quiz.</p>
+    <div class="login-div p-5 mt-5 text-center rounded-4">
+        <h1>Quiz Completed</h1>
+        <p>Congratulations! You have successfully added all the questions for the quiz.</p>
+        <a href="/">
+            <button class="d-inline-flex align-items-center btn px-4 rounded-pill" type="button">
+                Home
+            </button>
+        </a>
+    </div>
 </div>
 {% endblock %}

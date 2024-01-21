@@ -2,13 +2,39 @@
 {% block title %} Confirm Quiz {% endblock %}
 
 {% block content %}
-<h1>Quiz Confirmation</h1>
-<p>All questions have been added. Do you want to submit the quiz?</p>
-<form action="{{ url_for('views.confirm_quiz') }}" method="post">
-    <input name="action" type="submit" value="submit">
-    <input name="action" type="submit" value="cancel">
-</form>
+<style>
+    body {
+        background-color: #F9F7F7;
+    }
 
+    .login-div {
+        background-color: #DBE2EF;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        transition: transform 0.2s;
+        width: 50%;
+        margin: auto;
+    }
+
+    .form-group label {
+        display: flex;
+        justify-content: flex-start;
+    }
+
+    .btn {
+        background-color: #3F72AF;
+        color: #DBE2EF;
+    }
+</style>
+
+<div class="container">
+    <div class="login-div p-5 mt-5 text-center rounded-4">
+        <h1>Quiz Confirmation</h1>
+        <p>All questions have been added. Do you want to submit the quiz?</p>
+        <form action="{{ url_for('views.confirm_quiz') }}" method="post">
+            <input name="action" class="btn px-4 rounded-pill" type="submit" value="submit">
+            <input name="action" class="btn px-4 rounded-pill" type="submit" value="cancel">
+        </form>
+    </div>
+</div>
 
 {% endblock %}
-

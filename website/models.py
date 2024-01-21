@@ -44,10 +44,6 @@ class Quiz(db.Model):
     attempts = db.relationship('User', secondary=quiz_attempts, backref='quiz_attempts')
     course = db.relationship('Course', backref='quizzes')
 
-    def add_attempt(self, student_id, overall_score):
-        self.user_attempts.append(User.query.get(student_id))
-        db.session.commit()
-
 
 class Question(db.Model):
     __tablename__ = 'questions'
@@ -58,7 +54,6 @@ class Question(db.Model):
     option_c = db.Column(db.String(250))
     option_d = db.Column(db.String(250))
     correct_option = db.Column(db.String(10))
-
     quiz_id = db.Column(db.Integer, db.ForeignKey('quizzes.id'), nullable=False)
 
     quiz = db.relationship('Quiz', backref='related_questions')

@@ -35,7 +35,6 @@ def teacher_courses():
 
     teacher_courses = Course.query.filter_by(teacher_id=current_user.id).all()
 
-    # This is for getting student applications for the teachers courses
     pending_applications = (
         db.session.query(StudentApplication, User.firstName.label('student_name'), Course.course_name)
         .join(User, StudentApplication.student_id == User.id)
@@ -97,7 +96,6 @@ def create_quiz():
         flash("Access Denied: Only teachers can add quizzes.", 'error')
         return redirect(url_for('views.home'))
 
-    # Get all the courses for the logged in teacher
     courses = Course.query.filter_by(teacher_id=current_user.id).all()
     current_date = datetime.now().strftime('%Y-%m-%d')
 
@@ -112,7 +110,6 @@ def create_quiz():
             flash("Please enter both time limit and availability date before continuing.", 'error')
             return render_template('create_quiz.html', user=current_user, courses=courses), 400
 
-        # This part is for checking if a quiz with the same name exists.
         existing_quiz = Quiz.query.filter_by(quiz_name=quiz_name).first()
         if existing_quiz:
             flash("Quiz with the same name already exists. Please use a different name.", 'error')
@@ -459,7 +456,6 @@ def create_course():
 
         teacher = User.query.filter_by(id=teacher_id, role='teacher').first()
 
-        # BUNA GEREK VAR MI BAK
         if not teacher:
             flash('Invalid teacher selection.', 'error')
             return redirect(url_for('create_course'))

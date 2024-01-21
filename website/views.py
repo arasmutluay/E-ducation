@@ -99,6 +99,7 @@ def create_quiz():
 
     # Get all the courses for the logged in teacher
     courses = Course.query.filter_by(teacher_id=current_user.id).all()
+    current_date = datetime.now().strftime('%Y-%m-%d')
 
     if request.method == 'POST':
         quiz_name = request.form['quiz_name']
@@ -132,7 +133,7 @@ def create_quiz():
 
         return redirect(url_for('views.add_question'))
 
-    return render_template('create_quiz.html', user=current_user, courses=courses)
+    return render_template('create_quiz.html', user=current_user, courses=courses, current_date=current_date)
 
 
 @views.route('/add_question', methods=['GET', 'POST'])
@@ -332,7 +333,7 @@ def attend_quiz_questions(quiz_id):
 
             return redirect(url_for('views.quiz_results', quiz_id=quiz_id))
 
-    return render_template('attend_quiz_questions.html', user=current_user, quiz=quiz)
+    return render_template('attend_quiz_questions.html', user=current_user, quiz=quiz, time_limit=quiz.time_limit)
 
 
 @views.route('/quiz_results/<int:quiz_id>', methods=['GET'])

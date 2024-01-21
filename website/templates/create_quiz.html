@@ -83,10 +83,24 @@
 
         <div class="form-group">
             <label for="availability_date">Availability Date:</label>
-            <input id="availability_date" name="availability_date" type="datetime-local">
+            <input id="availability_date" name="availability_date" required type="datetime-local">
+
+
         </div>
 
         <button id="nextBtn" class="d-inline-flex align-items-center btn px-4 rounded-pill" type="submit">Next</button>
     </form>
 </div>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        var currentDate = new Date();
+        var formattedDate = currentDate.toISOString().slice(0, 16); // Remove seconds and milliseconds
+        var inputElement = document.getElementById("availability_date");
+        inputElement.min = formattedDate;
+    });
+</script>
+
+
+
+
 {% endblock %}

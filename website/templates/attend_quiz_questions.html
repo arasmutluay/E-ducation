@@ -51,8 +51,12 @@
 
 <div class="container">
     <h1 class="fw-bold">Quiz: {{ quiz.quiz_name }}</h1>
+    <p class="fw-bold mb-0">Quiz Duration: </p>
+    <div id="timer" class="mt-0 mb-2"></div>
 
-    <form action="{{ url_for('views.attend_quiz_questions', quiz_id=quiz.id) }}" method="POST">
+    <input id="time_limit_variable" type="hidden" value="{{ time_limit }}">
+
+    <form id="quiz-form" action="{{ url_for('views.attend_quiz_questions', quiz_id=quiz.id) }}" method="POST">
         {% for question in quiz.questions %}
         <div class="question-container">
             <h3>{{ question.question_text }}</h3>
@@ -80,12 +84,37 @@
     </form>
 </div>
 <script>
-    document.addEventListener(
-        "contextmenu",
-        (e) => {
-            e.preventDefault();
-        },
-        false
-    );
+    // document.addEventListener(
+    //     "contextmenu",
+    //     (e) => {
+    //         e.preventDefault();
+    //     },
+    //     false
+    // );
+
+    function startTimer(duration, display) {
+        var timer = duration, minutes, seconds;
+        setInterval(function () {
+            minutes = parseInt(timer / 60, 10);
+            seconds = parseInt(timer % 60, 10);
+
+            minutes = minutes < 10 ? "0" + minutes : minutes;
+            seconds = seconds < 10 ? "0" + seconds : seconds;
+
+            display.textContent = minutes + ":" + seconds;
+
+            if (--timer < 0) {
+                document.getElementById("quiz-form").submit();
+            }
+        }, 1000);
+    }
+
+    document.addEventListener("DOMContentLoaded", function () {
+        var quizDuration = document.querySelector('#time_limit_variable').value
+        var timerDisplay = document.getElementById("timer");
+        startTimer(quizDuration * 60, timerDisplay);
+    });
+
+
 </script>
 {% endblock %}

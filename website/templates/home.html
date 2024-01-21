@@ -35,6 +35,10 @@
             background-color: #112D4E !important;
         }
 
+        .underlined {
+            text-decoration: underline;
+        }
+
     </style>
     {% if current_user.is_authenticated %}
         {% if current_user.role == 'admin' %}
@@ -43,9 +47,10 @@
                     <svg class="bi mt-4 mb-3" height="100" width="100">
                         <use xlink:href="#bootstrap"></use>
                     </svg>
-                    <h1 class="display-3 fw-bold">Welcome, Admin!</h1>
+                    <h1 class="display-3 fw-bold">Welcome, {{ current_user.firstName }}!</h1>
                     <p class="fs-5">
-                        As an admin, you have special privileges to manage users and create courses.
+                        As an <span class="underlined">admin</span>, you have special privileges to manage users and
+                        create courses.
                     </p>
                     <p class="fs-5 ">
                         Ready to take control? Click the buttons below!
@@ -72,9 +77,11 @@
                     <svg class="bi mt-4 mb-3" height="100" width="100">
                         <use xlink:href="#bootstrap"></use>
                     </svg>
-                    <h1 class="display-3 fw-bold">Welcome, Teacher!</h1>
+                    <h1 class="display-3 fw-bold">Welcome, {{ current_user.firstName }}!</h1>
                     <p class="fs-5">
-                        As a teacher, you can create engaging quizzes and you can handle enrollment processes for your
+                        As a <span class="underlined">teacher</span>, you can create engaging quizzes, and you can
+                        handle enrollment
+                        processes for your
                         students.
                     </p>
                     <p class="fs-5 ">
@@ -97,7 +104,35 @@
 
 
         {% elif current_user.role == 'student' %}
-            <h1>hello student</h1>
+            <div class="container my-5">
+                <div class="student_info p-5 text-center rounded-4">
+                    <svg class="bi mt-4 mb-3" height="100" width="100">
+                        <use xlink:href="#bootstrap"></use>
+                    </svg>
+                    <h1 class="display-3 fw-bold">Welcome, {{ current_user.firstName }}!</h1>
+                    <p class="fs-5">
+                        As a <span class="underlined">student</span>, you can enroll in courses, participate in quizzes, and enhance your
+                        learning
+                        experience.
+                    </p>
+                    <p class="fs-5 ">
+                        Ready to explore? Click the button below to see available courses and quizzes!
+                    </p>
+                    <div class="d-inline-flex gap-2 mb-5">
+                        <a href="/available_courses">
+                            <button class="d-inline-flex align-items-center btn px-4 rounded-pill" type="button">
+                                Enroll in Courses
+                            </button>
+                        </a>
+                        <a href="/quizzes">
+                            <button class="d-inline-flex align-items-center btn px-4 rounded-pill" type="button">
+                                View Quizzes
+                            </button>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
 
         {% endif %}
 

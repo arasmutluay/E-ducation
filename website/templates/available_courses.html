@@ -2,16 +2,49 @@
 {% block title %} Enroll in a Course {% endblock %}
 
 {% block content %}
+<style>
+    .courses-div {
+        background-color: #DBE2EF;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        transition: transform 0.2s;
+        width: 80%;
+        margin: auto;
+    }
+
+    body {
+        background-color: #F9F7F7;
+    }
+
+    .form-group label {
+        display: flex;
+        justify-content: flex-start;
+    }
+
+
+
+    .course-list h2 {
+        text-align: center;
+    }
+
+    .list-group-item {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 1rem;
+    }
+
+</style>
+
 <div class="container">
-    <div class="row justify-content-center mt-5">
+    <div class="courses-div row justify-content-center mt-5 rounded-4">
         <div class="col-md-6">
-            <h2 class="text-center">Current Courses</h2>
-            <ul class="list-group">
+            <h2 class="text-center mt-5">Current Courses</h2>
+            <ul class="list-group course-list mt-4">
                 {% for course, teacher_name in current_courses %}
                 <li class="list-group-item">
                     Course Name: {{ course.course_name }} |
                     Teacher: {{ teacher_name }}
-                    <form action="{{ url_for('views.drop_course', course_id=course.id) }}" class="float-right"
+                    <form action="{{ url_for('views.drop_course', course_id=course.id) }}"
                           method="POST">
                         <button class="btn btn-danger btn-sm" type="submit">Drop Course</button>
                     </form>
@@ -20,8 +53,8 @@
             </ul>
         </div>
         <div class="col-md-6">
-            <h2 class="text-center">Available Courses</h2>
-            <ul class="list-group">
+            <h2 class="text-center mt-5">Available Courses</h2>
+            <ul class="list-group course-list mt-4">
                 {% for course, teacher_name in available_courses %}
                 <li class="list-group-item">
                     Course Name: {{ course.course_name }} |

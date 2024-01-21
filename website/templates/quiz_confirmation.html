@@ -28,7 +28,7 @@
 
 <div class="container">
     <div class="login-div p-5 mt-5 text-center rounded-4">
-        <h1>Quiz Confirmation</h1>
+        <h1 class="fw-bold">Quiz Confirmation</h1>
         <p>All questions have been added. Do you want to submit the quiz?</p>
         <form action="{{ url_for('views.confirm_quiz') }}" method="post">
             <input name="action" class="btn px-4 rounded-pill" type="submit" value="submit">

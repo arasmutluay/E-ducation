@@ -29,6 +29,7 @@
     h1 {
         text-align: center;
         margin-bottom: 20px;
+
     }
 
     .quiz-form .form-group {
@@ -54,7 +55,7 @@
 
 </style>
 <div class="container mt-3">
-    <h1>Create a Quiz</h1>
+    <h1 class="fw-bold">Create a Quiz</h1>
     <form id="quizForm" action="{{ url_for('views.create_quiz') }}" class="quiz-form" method="POST">
         <div class="form-group">
             <label for="quiz_name">Quiz Name:</label>

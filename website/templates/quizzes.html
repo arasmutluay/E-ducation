@@ -3,6 +3,10 @@
 
 {% block content %}
     <style>
+        body {
+            background-color: #F9F7F7;
+        }
+
         h1 {
             padding: 25px 0;
         }
@@ -11,7 +15,7 @@
             width: 80%;
             margin: 0 auto;
             display: flex;
-            flex-wrap: wrap; /* Allow items to wrap to the next line */
+            flex-wrap: wrap;
             justify-content: space-between;
         }
 
@@ -27,7 +31,7 @@
             padding: 20px;
             text-align: left;
             transition: box-shadow 0.3s ease;
-            background-color: #f9f9f9;
+            background-color: #DBE2EF;
             box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
         }
 
@@ -51,38 +55,29 @@
             display: inline;
         }
 
-        .quiz-box button {
-            padding: 10px 20px;
-            font-size: 1em;
-            background-color: #007bff;
-            color: #fff;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-            transition: background-color 0.3s;
-        }
-
-        .quiz-box button:hover {
-            background-color: #0056b3;
-        }
 
         .attempted-quizzes h1,
         .available-quizzes h1 {
-            width: 100%; /* Full width for h1 */
+            width: 100%;
             text-align: center;
             margin-bottom: 20px;
         }
 
         .attempted-quizzes .quizzes-grid,
         .available-quizzes .quizzes-grid {
-            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); /* Adjusted for responsive layout */
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
             grid-gap: 20px;
         }
 
         .available-quizzes,
         .attempted-quizzes {
-            width: 48%; /* Adjusted width for responsiveness */
+            width: 48%;
             text-align: center;
+        }
+
+        .btn {
+            background-color: #3F72AF;
+            color: #DBE2EF;
         }
 
     </style>
@@ -100,8 +95,13 @@
                             <p>Time Limit: {{ quiz.time_limit }} Minutes</p>
                             {% if quiz.availability_date %}
                                 {% if quiz.availability_date < time.now() %}
-                                    <a class="attend-link"
-                                       href="{{ url_for('views.attend_quiz_questions', quiz_id=quiz.id) }}">Attend</a>
+                                    <a href="{{ url_for('views.attend_quiz_questions', quiz_id=quiz.id) }}">
+                                        <button class="d-inline-flex align-items-center btn px-4 rounded-pill"
+                                                type="button">
+                                            Attend
+                                        </button>
+                                    </a>
+
                                 {% else %}
                                     <p>Available on: <br> {{ quiz.availability_date }}</p>
                                 {% endif %}

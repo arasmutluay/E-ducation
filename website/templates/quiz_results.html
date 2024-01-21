@@ -4,17 +4,21 @@
 {% block content %}
 <style>
     .container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
         width: 80%;
-        margin: 0 auto;
         text-align: center;
     }
 
     .quiz-info {
         padding: 20px;
+        width: 60%;
         border: 1px solid #ccc;
         border-radius: 8px;
         margin-bottom: 20px;
-        background-color: #f9f9f9;
+        background-color: #DBE2EF;
         box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
     }
 
@@ -29,32 +33,16 @@
         color: #666;
     }
 
-    .details p {
-        margin-bottom: 5px;
+    .btn {
+        background-color: #3F72AF;
+        color: #DBE2EF;
     }
 
-    .back-button {
-        padding: 10px 20px;
-        font-size: 1em;
-        background-color: #007bff;
-        color: #fff;
-        border: none;
-        border-radius: 4px;
-        cursor: pointer;
-        transition: background-color 0.3s;
-        text-decoration: none;
-        display: inline-block;
-        margin-top: 20px;
-    }
-
-    .back-button:hover {
-        background-color: #0056b3;
-    }
 </style>
 
 <div class="container">
-    <div class="quiz-info">
-        <h2>Quiz: {{ quiz.quiz_name }}</h2>
+    <div class="quiz-info mt-5">
+        <h2 class="fw-bold">Quiz: {{ quiz.quiz_name }}</h2>
         <div class="score">
             Overall Score: {{ overall_score }}%
         </div>
@@ -63,6 +51,7 @@
         </div>
     </div>
 
-    <a class="back-button" href="{{ url_for('views.home') }}">Home Page</a>
+    <a class="btn px-4 rounded-pill mt-3 rounded-pill mt-2"
+       href="{{ url_for('views.home') }}">Home Page</a>
 </div>
 {% endblock %}

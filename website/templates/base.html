@@ -40,7 +40,6 @@
             background-color: #F9F7F7;
         }
 
-
     </style>
 </head>
 <body>
@@ -50,13 +49,7 @@
             <img src="static/logo.png" alt="E-ducation Logo" class="logo-img">
         </a>
 
-        <div>
-            {% if user.is_authenticated %}
-                <p class="mb-0">Logged in as: {{ current_user.firstName }} Role:{{ current_user.role }}</p>
-            {% endif %}
-        </div>
-
-        <ul class="nav nav-pills">
+        <ul class="nav nav-pills ms-auto">
             {% if user.is_authenticated %}
                 <li class="nav-item"><a id="home" aria-current="page" class="nav-link rounded-pill" href="/">Home</a>
                 </li>
@@ -93,7 +86,7 @@
                     </button>
                 </div>
             {% else %}
-                <div class="alert alert-success alter-dismissable fade show" role="alert">
+                <div class="alert alert-primary alter-dismissable fade show" role="alert">
                     {{ message }}
                     <button class="close" data-dismiss="alert" type="button">
                         <span aria-hidden="true">&times;</span>
